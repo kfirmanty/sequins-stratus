@@ -1,5 +1,9 @@
 s = require 'sequins'
 engine.name = "PolyPerc"
+local grid = util.file_exists(_path.code.."midigrid") and include "midigrid/lib/mg_128" or grid
+
+local g = grid.connect(3)
+
 local rows = 4
 local cols = 4
 local base_freq = 110
@@ -41,4 +45,10 @@ function iter()
          end
       end
    end
+end
+
+function g.key(x,y,z)
+  if z == 1 then
+     notes_held[y][2] = x
+  end
 end

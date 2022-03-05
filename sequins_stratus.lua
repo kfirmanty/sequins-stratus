@@ -52,10 +52,16 @@ function iter()
    end
 end
 
+local bottom_selects_notes = false
+
 function g.key(x,y,z)
    if z == 1 then
-      notes_held[y][2] = x
-      for xt = 1, cols do
+      if bottom_selects_notes and y > 4 then
+         notes_held[y-4][1] = math.min(x, #scale)
+      else
+         notes_held[y][2] = x
+      end
+      for xt = 1, 8 do
          g:led(xt,y, 0)   
       end
       g:led(x, y, 15)

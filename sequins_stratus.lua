@@ -3,7 +3,6 @@ engine.name = "PolyPerc"
 local grid = util.file_exists(_path.code.."midigrid") and include "midigrid/lib/mg_128" or grid
 
 local g = grid.connect(3)
-
 local rows = 4
 local cols = 4
 local base_freq = 110
@@ -29,6 +28,12 @@ function three_three_two() return s{1, 0, 0, 1, 0, 0, 1, 0} end
 function five_steps() return s{0, 1, 0, 0, 1} end
 
 function init()
+   for x = 1, 8 do
+      for y = 1, 8 do
+         g:led(x, y, 0)
+      end
+   end
+   g:refresh()
    matrix = create_matrix({four_on_the_floor, fake_skipping_shuffle, three_three_two, five_steps})
    clock.run(iter)
 end
@@ -48,7 +53,12 @@ function iter()
 end
 
 function g.key(x,y,z)
-  if z == 1 then
-     notes_held[y][2] = x
-  end
+   if z == 1 then
+      notes_held[y][2] = x
+      for xt = 1, cols do
+         g:led(xt,y, 0)   
+      end
+      g:led(x, y, 15)
+      g:refresh()
+   end
 end

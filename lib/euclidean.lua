@@ -1,6 +1,6 @@
 s = require 'sequins'
 
-local function rythm(k,n)
+function rythm(k,n)
    local r = {}
    for i = 1,n do
       r[i] = {i <= k}
@@ -26,7 +26,7 @@ local function rythm(k,n)
    return r[1]
 end
 
-local function generate(k, n)
+function generate(k, n)
    local seq = s{}
    local raw_seq = {}
    for i,v in ipairs(rythm(k,n)) do
